@@ -1,8 +1,5 @@
-#This is a dated file copy script
-
-date=$(date +'%m-%d-%y')
-a=$1
-b=$(basename $a)
-cp -rp $1 $date.$b
-echo the file created is $date.$b
-
+#!/bin/bash
+#Script to create a dated copy of input file
+day='date +%m-%d-%Y'
+cp -rp $1 $1.$day
+echo "The new file created is  $1.$day"

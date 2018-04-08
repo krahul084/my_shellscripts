@@ -1,8 +1,3 @@
 #!/bin/bash
-#Script to take the user input
-
-echo Hello, who am I talking to?
-
-read name
-
-echo It\'s nice to meet you $name
+#This is a simple script to display the arguments
+echo "The arguments passed to the script are:$@ "
