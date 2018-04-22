@@ -40,7 +40,7 @@ extract_info() {
             let i+=1
         done
         declare -g form1=$(printf "%s," "${final[@]}")
-        form2=$(sed 's/string,$/string/g' <<< $form1)
+        form2=$(${form1[::-1]})
     else
         echo "Source file doesnt exist"
         exit 2
