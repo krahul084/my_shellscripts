@@ -40,6 +40,7 @@ extract_info() {
             let i+=1
         done
         declare -g form1=$(printf "%s," "${final[@]}")
+        form2=$(sed 's/string,$/string/g' <<< $form1)
     else
         echo "Source file doesnt exist"
         exit 2
@@ -53,12 +54,12 @@ deploy_table() {
     file=$(echo $filename | cut -d'.' -f1)
     hadoop fs -mkdir $HOME/$file >> /dev/null && hadoop fs -put $path $HOME/$file/ 2>>1 >> /dev/null
     if [ $? -eq 0 ]; then
-        echo "Using hive to create table using below attribute information\n"
-        echo "($form1)"
-        hive -e "create table if not exists $file($form1)  ROW FORMAT DELIMITED FIELDS TERMINATED BY ':' LINES TERMINATED BY '\n' stored as textfile LOCATION table '/hive/$file';" 2>>1 >> /dev/null
+        echo "Using hive to create table using below attribute information"
+        echo "($form2)"
+        hive -e "create table if not exists $file($form2)  ROW FORMAT DELIMITED FIELDS TERMINATED BY ':' LINES TERMINATED BY '\n' stored as textfile LOCATION '/hive/$file';" 2>>1 >> /dev/null
         if [ $? -eq 0 ]; then
             echo "Created the table! now loading the data from source file****"; sleep 3;
-            hive -e "load data inpath '$HOME/$file/$filename' into $file;" 2>>1 >> /dev/null && echo "Data Imported Successfully"
+            hive -e "load data inpath '$HOME/$file/$filename' into table $file;" 2>>1 >> /dev/null && echo "Data Imported Successfully"
         else
             echo "Error Creating the table!"
             exit 3
