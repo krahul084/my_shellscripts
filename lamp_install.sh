@@ -1,6 +1,6 @@
 #!/bin/bash
 #script to install nagios core on centos 7
-lamp_packages=( "httpd" "mariadb-server" "mariadb" "php" "php-mysql" "php-fpm" "elinks" )
+lamp_packages=( "httpd" "mariadb-server" "mariadb" "php" "php-mysql" "php-fpm" "elinks" "phpmyadmin")
 lamp_services=( httpd mariadb )
 
 #script_utils=( pv dialog )
